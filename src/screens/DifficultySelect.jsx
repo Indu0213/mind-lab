@@ -1,13 +1,13 @@
 import { ArrowRight } from 'lucide-react'
 import TopBar from '../components/TopBar.jsx'
 import PageHeader from '../components/PageHeader.jsx'
-import { DIFFICULTIES, getCategory } from '../data/science.js'
+import { DIFFICULTIES, getCategory, themeStyle } from '../data/science.js'
 import { formatTime } from '../utils/game.js'
 
 export default function DifficultySelect({ categoryId, onSelect, onBack }) {
   const category = getCategory(categoryId)
   return (
-    <div className="view" style={{ '--accent': category.color, '--accent-soft': category.colorSoft }}>
+    <div className="view themed" style={themeStyle(category)}>
       <TopBar crumbs={['Play', category.name]} onBack={onBack} />
       <PageHeader
         title={<>Select <span className="wavy">difficulty</span>.</>}
@@ -29,7 +29,7 @@ export default function DifficultySelect({ categoryId, onSelect, onBack }) {
               </span>
               <span className="diff-body">
                 <span className="row-title">
-                  {d.name} <span className="mult">×{d.multiplier}</span>
+                  {d.name} <span className={`mult tone-${d.tone}`}>×{d.multiplier}</span>
                 </span>
                 <span className="row-sub">{d.pairs} pairs · {cards} cards</span>
                 <span className="eyebrow row-meta">

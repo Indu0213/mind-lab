@@ -14,6 +14,7 @@ export default function Splash({ onDone }) {
       </span>
       <h1 className="splash-title">MindLab</h1>
       <p className="eyebrow">Science memory challenge</p>
+      <span className="dots dots-lg" aria-hidden="true"><i /><i /><i /><i /></span>
       <div className="splash-loader"><span /></div>
     </div>
   )

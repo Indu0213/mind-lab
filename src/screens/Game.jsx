@@ -4,7 +4,7 @@ import TopBar from '../components/TopBar.jsx'
 import Card from '../components/Card.jsx'
 import FactPopup from '../components/FactPopup.jsx'
 import StatsBar from '../components/StatsBar.jsx'
-import { getCategory, getDifficulty } from '../data/science.js'
+import { getCategory, getDifficulty, themeStyle } from '../data/science.js'
 import { buildDeck, calcAccuracy, calcScore } from '../utils/game.js'
 import { useTimer } from '../hooks/useTimer.js'
 
@@ -109,7 +109,7 @@ export default function Game({ categoryId, difficultyId, onFinish, onQuit }) {
   }, [difficulty])
 
   return (
-    <div className="view game" style={{ '--accent': category.color, '--accent-soft': category.colorSoft }}>
+    <div className="view game themed" style={themeStyle(category)}>
       <div className="game-toolbar">
         <TopBar
           crumbs={[category.name, difficulty.name]}
@@ -126,13 +126,12 @@ export default function Game({ categoryId, difficultyId, onFinish, onQuit }) {
 
       <Status peeking={peeking} started={started} remaining={remaining} peekMs={difficulty.peekMs} run={run} />
 
-      <div className="stage dotgrid">
+      <div className="stage dotgrid dotgrid-accent">
         <div className={`grid${difficulty.columns >= 5 ? ' is-dense' : ''}`} style={boardStyle}>
           {deck.map((card) => (
             <Card
               key={card.uid}
               card={card}
-              color={category.color}
               flipped={peeking || flipped.includes(card.uid)}
               matched={matched.has(card.uid)}
               disabled={peeking || locked}

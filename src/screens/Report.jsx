@@ -1,8 +1,8 @@
-import { LayoutGrid, RotateCcw, Trophy } from 'lucide-react'
+import { Clock, Crosshair, Layers, LayoutGrid, RotateCcw, Trophy, X } from 'lucide-react'
 import TopBar from '../components/TopBar.jsx'
 import PageHeader from '../components/PageHeader.jsx'
 import ProgressRing from '../components/ProgressRing.jsx'
-import { getCategory, getDifficulty } from '../data/science.js'
+import { getCategory, getDifficulty, themeStyle } from '../data/science.js'
 import { formatNumber, formatTime, memoryRating } from '../utils/game.js'
 import { useCountUp } from '../hooks/useCountUp.js'
 
@@ -18,14 +18,14 @@ export default function Report({ result, best, onPlayAgain, onChangeMode, onHome
   const found = result.found || []
 
   const details = [
-    { label: 'Completion time', value: formatTime(result.seconds) },
-    { label: 'Attempts', value: result.attempts },
-    { label: 'Pairs matched', value: result.pairs },
-    { label: 'Mistakes', value: result.attempts - result.pairs },
+    { label: 'Completion time', value: formatTime(result.seconds), icon: Clock, tone: 'blue' },
+    { label: 'Attempts', value: result.attempts, icon: Crosshair, tone: 'amber' },
+    { label: 'Pairs matched', value: result.pairs, icon: Layers, tone: 'emerald' },
+    { label: 'Mistakes', value: result.attempts - result.pairs, icon: X, tone: 'rose' },
   ]
 
   return (
-    <div className="view report" style={{ '--accent': category.color, '--accent-soft': category.colorSoft }}>
+    <div className="view report themed" style={themeStyle(category)}>
       <div className="report-crumbs">
         <TopBar crumbs={['Report', category.name, difficulty.name]} onBack={onHome} />
       </div>
@@ -82,9 +82,12 @@ export default function Report({ result, best, onPlayAgain, onChangeMode, onHome
         </div>
 
         <div className="panel details">
-          {details.map(({ label, value }) => (
-            <div className="detail" key={label}>
-              <span className="eyebrow">{label}</span>
+          {details.map(({ label, value, icon: Icon, tone }) => (
+            <div className={`detail tone-${tone}`} key={label}>
+              <span className="detail-label">
+                <span className="tone-chip"><Icon size={12} strokeWidth={2.25} /></span>
+                <span className="eyebrow">{label}</span>
+              </span>
               <span className="detail-value">{value}</span>
             </div>
           ))}

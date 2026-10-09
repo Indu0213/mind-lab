@@ -34,7 +34,10 @@ export default function Shell({ active, onNavigate, children }) {
             ))}
           </nav>
 
-          <span className="eyebrow nav-tag">Memory / Science</span>
+          <span className="nav-tag">
+            <span className="dots" aria-hidden="true"><i /><i /><i /><i /></span>
+            <span className="eyebrow">Memory / Science</span>
+          </span>
         </div>
       </header>
 

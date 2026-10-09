@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowRight, Check } from 'lucide-react'
-import { ELEMENTS } from '../data/science.js'
+import { ELEMENTS, themeStyle } from '../data/science.js'
 
 // Fact card shown after a successful match, laid out like a small catalogue entry.
 export default function FactPopup({ element, category, found, total, onClose }) {
@@ -26,7 +26,7 @@ export default function FactPopup({ element, category, found, total, onClose }) 
         aria-modal="true"
         aria-labelledby="fact-title"
         onClick={(e) => e.stopPropagation()}
-        style={{ '--accent': category.color, '--accent-soft': category.colorSoft }}
+        style={themeStyle(category)}
       >
         <div className="popup-head">
           <span className="eyebrow">{catalogRef} / {category.name}</span>
@@ -36,8 +36,8 @@ export default function FactPopup({ element, category, found, total, onClose }) 
         </div>
 
         <div className="popup-body">
-          <span className="icon-tile icon-tile-lg">
-            <Icon size={28} strokeWidth={1.5} />
+          <span className="icon-tile icon-tile-lg icon-tile-solid">
+            <Icon size={28} strokeWidth={1.6} />
           </span>
           <h2 id="fact-title" className="popup-title">{element.name}</h2>
           <p className="eyebrow">Did you know</p>

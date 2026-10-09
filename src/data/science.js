@@ -10,12 +10,22 @@ import {
   Orbit, Rocket, Satellite, SatelliteDish, Telescope, Moon, Sun, Earth, Star, Sparkles, Aperture, Navigation, Cloud, Disc, MoonStar,
 } from 'lucide-react'
 
+// Each field has one colour, given as a ramp: strong, deep (text on tints), soft and tint (surfaces), line (borders).
 export const CATEGORIES = [
-  { id: 'biology', code: 'BIO', name: 'Biology', tagline: 'Cells, organs & living things', icon: Dna, color: '#059669', colorSoft: '#ecfdf5' },
-  { id: 'physics', code: 'PHY', name: 'Physics', tagline: 'Forces, energy & matter', icon: Atom, color: '#2563eb', colorSoft: '#eff6ff' },
-  { id: 'chemistry', code: 'CHM', name: 'Chemistry', tagline: 'Elements, reactions & compounds', icon: FlaskConical, color: '#d97706', colorSoft: '#fffbeb' },
-  { id: 'space', code: 'SPC', name: 'Space', tagline: 'Planets, stars & the cosmos', icon: Orbit, color: '#7c3aed', colorSoft: '#f5f3ff' },
+  { id: 'biology', code: 'BIO', name: 'Biology', tagline: 'Cells, organs & living things', icon: Dna, color: '#059669', colorDeep: '#047857', colorSoft: '#ecfdf5', colorTint: '#d1fae5', colorLine: '#a7f3d0' },
+  { id: 'physics', code: 'PHY', name: 'Physics', tagline: 'Forces, energy & matter', icon: Atom, color: '#2563eb', colorDeep: '#1d4ed8', colorSoft: '#eff6ff', colorTint: '#dbeafe', colorLine: '#bfdbfe' },
+  { id: 'chemistry', code: 'CHM', name: 'Chemistry', tagline: 'Elements, reactions & compounds', icon: FlaskConical, color: '#d97706', colorDeep: '#b45309', colorSoft: '#fffbeb', colorTint: '#fef3c7', colorLine: '#fde68a' },
+  { id: 'space', code: 'SPC', name: 'Space', tagline: 'Planets, stars & the cosmos', icon: Orbit, color: '#e11d48', colorDeep: '#be123c', colorSoft: '#fff1f2', colorTint: '#ffe4e6', colorLine: '#fecdd3' },
 ]
+
+// Exposes a category's colour ramp to CSS. Spread into the `style` of any themed element.
+export const themeStyle = (category) => ({
+  '--accent': category.color,
+  '--accent-deep': category.colorDeep,
+  '--accent-soft': category.colorSoft,
+  '--accent-tint': category.colorTint,
+  '--accent-line': category.colorLine,
+})
 
 export const ELEMENTS = {
   biology: [
@@ -89,10 +99,11 @@ export const ELEMENTS = {
 }
 
 // `columns` is the board width on phones, `columnsWide` on desktop layouts.
+// `tone` is the signal colour used for the level badge.
 export const DIFFICULTIES = [
-  { id: 'easy', name: 'Easy', pairs: 6, columns: 4, columnsWide: 4, peekMs: 3000, parSeconds: 45, multiplier: 1 },
-  { id: 'medium', name: 'Medium', pairs: 8, columns: 4, columnsWide: 4, peekMs: 2500, parSeconds: 75, multiplier: 1.5 },
-  { id: 'hard', name: 'Hard', pairs: 15, columns: 5, columnsWide: 6, peekMs: 2000, parSeconds: 150, multiplier: 2 },
+  { id: 'easy', tone: 'emerald', name: 'Easy', pairs: 6, columns: 4, columnsWide: 4, peekMs: 3000, parSeconds: 45, multiplier: 1 },
+  { id: 'medium', tone: 'amber', name: 'Medium', pairs: 8, columns: 4, columnsWide: 4, peekMs: 2500, parSeconds: 75, multiplier: 1.5 },
+  { id: 'hard', tone: 'rose', name: 'Hard', pairs: 15, columns: 5, columnsWide: 6, peekMs: 2000, parSeconds: 150, multiplier: 2 },
 ]
 
 export const getCategory = (id) => CATEGORIES.find((c) => c.id === id)

@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, Check, FlaskConical, Magnet, Microscope, Repeat, Rocket, Target, Trophy } from 'lucide-react'
 import CategoryCard from '../components/CategoryCard.jsx'
-import { CATEGORIES, ELEMENTS } from '../data/science.js'
+import { CATEGORIES, ELEMENTS, themeStyle } from '../data/science.js'
 import { getBestByCategory, getPlayerName, getScores, setPlayerName } from '../utils/storage.js'
 import { formatNumber } from '../utils/game.js'
 
@@ -11,9 +11,17 @@ const FAN = [
   { categoryId: 'physics', elementId: 'atom' },
   { categoryId: 'space', elementId: 'saturn' },
 ].map(({ categoryId, elementId }) => ({
-  color: CATEGORIES.find((c) => c.id === categoryId).color,
+  category: CATEGORIES.find((c) => c.id === categoryId),
   element: ELEMENTS[categoryId].find((e) => e.id === elementId),
 }))
+
+// Small colour tiles around the hero illustration, one per field.
+const STICKERS = [
+  { icon: Microscope, tone: 'emerald' },
+  { icon: Magnet, tone: 'blue' },
+  { icon: FlaskConical, tone: 'amber' },
+  { icon: Rocket, tone: 'rose' },
+]
 
 const SAMPLE = FAN[1].element
 const SAMPLE_FACT = `${SAMPLE.fact.split('. ')[0]}.`
@@ -75,17 +83,26 @@ export default function Home({ onPlay, onPickCategory }) {
           </form>
 
           <div className="panel metrics">
-            <div className="metric">
+            <div className="metric tone-blue">
+              <span className="metric-label">
+                <span className="tone-chip"><Repeat size={12} strokeWidth={2.25} /></span>
+                <span className="eyebrow">Rounds</span>
+              </span>
               <span className="metric-value">{games}</span>
-              <span className="eyebrow">Rounds</span>
             </div>
-            <div className="metric">
+            <div className="metric tone-amber">
+              <span className="metric-label">
+                <span className="tone-chip"><Trophy size={12} strokeWidth={2.25} /></span>
+                <span className="eyebrow">Best score</span>
+              </span>
               <span className="metric-value">{best}</span>
-              <span className="eyebrow">Best score</span>
             </div>
-            <div className="metric">
+            <div className="metric tone-emerald">
+              <span className="metric-label">
+                <span className="tone-chip"><Target size={12} strokeWidth={2.25} /></span>
+                <span className="eyebrow">Accuracy</span>
+              </span>
               <span className="metric-value">{accuracy}</span>
-              <span className="eyebrow">Accuracy</span>
             </div>
           </div>
         </div>
@@ -96,17 +113,22 @@ export default function Home({ onPlay, onPickCategory }) {
             {TOTAL_CARDS} cards / {CATEGORIES.length} fields
           </span>
           <div className="fan">
-            {FAN.map(({ color, element }, i) => {
+            {FAN.map(({ category, element }, i) => {
               const Icon = element.icon
               return (
-                <span key={element.id} className={`fan-card fan-card-${i + 1}`} style={{ '--card-accent': color }}>
+                <span key={element.id} className={`fan-card fan-card-${i + 1}`} style={themeStyle(category)}>
                   <Icon strokeWidth={1.5} />
                   <em>{element.name}</em>
                 </span>
               )
             })}
           </div>
-          <div className="hero-fact">
+          {STICKERS.map(({ icon: Icon, tone }, i) => (
+            <span key={tone} className={`sticker sticker-${i + 1} tone-${tone}`}>
+              <Icon size={18} strokeWidth={1.9} />
+            </span>
+          ))}
+          <div className="hero-fact" style={themeStyle(FAN[1].category)}>
             <span className="badge badge-emerald">
               <Check size={10} strokeWidth={3} /> Match
             </span>

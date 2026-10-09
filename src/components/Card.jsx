@@ -1,6 +1,6 @@
 import { Check, Sparkle } from 'lucide-react'
 
-export default function Card({ card, flipped, matched, disabled, color, onClick }) {
+export default function Card({ card, flipped, matched, disabled, onClick }) {
   const Icon = card.element.icon
   const classes = ['card', flipped && 'is-flipped', matched && 'is-matched'].filter(Boolean).join(' ')
   return (
@@ -10,7 +10,6 @@ export default function Card({ card, flipped, matched, disabled, color, onClick 
       onClick={onClick}
       disabled={disabled || matched || flipped}
       aria-label={flipped || matched ? card.element.name : 'Hidden card'}
-      style={{ '--card-accent': color }}
     >
       <span className="card-inner">
         <span className="card-face card-back" aria-hidden="true">

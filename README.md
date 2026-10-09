@@ -34,11 +34,21 @@ The production files are generated in the `dist/` folder.
 
 ## Design
 
-The interface uses a neutral, editorial style: white surfaces, hairline borders with soft layered shadows, and one accent colour per science category.
+The interface uses a neutral, editorial style: white surfaces, hairline borders with soft layered shadows, and one flat colour per science category.
 
 - **Type:** Instrument Serif for headings, Geist for interface text, Geist Mono for small uppercase labels
 - **Buttons:** tactile keycap style with a pressed state
 - **Icons:** Lucide
+- **Colour:** four flat colours, one per field, with no gradients
+
+| Field | Colour | Hex |
+| --- | --- | --- |
+| Biology | Emerald | `#059669` |
+| Physics | Blue | `#2563EB` |
+| Chemistry | Amber | `#D97706` |
+| Space | Rose | `#E11D48` |
+
+A field's colour is used for its icon tile, its card backs and the screens of a round played in it. The same four colours double as state colours: Easy is emerald, Medium is amber, Hard and mistakes are rose. Navigation, text and primary buttons stay black, white and grey so the field colours stand out.
 
 All design tokens (colours, fonts, shadows, easing) are CSS variables at the top of `src/styles/index.css`. The visual style is inspired by the open-source component library at opensourceui.in.
 
@@ -69,7 +79,19 @@ src/
                          Game, Report, Leaderboard
   styles/index.css       design tokens and all component styles
   App.jsx                screen flow
+tests/
+  unit.mjs               unit tests for the helpers, content and storage
+  system.mjs             system tests that drive the app in headless Chrome
 ```
+
+## Testing
+
+```bash
+npm test              # 42 unit tests: scoring, accuracy, rating, deck building, storage
+npm run test:system   # 43 system tests in headless Chrome (start `npm run dev` first)
+```
+
+The system tests drive the real interface: preview, flipping, matching, the fact popup, the report, the leaderboard, navigation and five screen sizes. They need Node.js 22 or later and Google Chrome.
 
 ## Scoring
 

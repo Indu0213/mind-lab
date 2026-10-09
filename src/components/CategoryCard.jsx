@@ -1,20 +1,20 @@
 import { ArrowRight } from 'lucide-react'
-import { ELEMENTS } from '../data/science.js'
+import { ELEMENTS, themeStyle } from '../data/science.js'
 import { formatNumber } from '../utils/game.js'
 
 // Category tile. A compact row on phones, a taller card with sample icons on wider screens.
 export default function CategoryCard({ category, best = 0, onSelect }) {
-  const { id, name, tagline, icon: Icon, color, colorSoft } = category
+  const { id, name, tagline, icon: Icon } = category
   const elements = ELEMENTS[id]
 
   return (
     <button
       className="depth-card cat-card"
-      style={{ '--accent': color, '--accent-soft': colorSoft }}
+      style={themeStyle(category)}
       onClick={() => onSelect(id)}
     >
-      <span className="icon-tile">
-        <Icon size={22} strokeWidth={1.6} />
+      <span className="icon-tile icon-tile-solid">
+        <Icon size={22} strokeWidth={1.75} />
       </span>
       <ArrowRight size={16} className="row-arrow" />
       <span className="cat-body">

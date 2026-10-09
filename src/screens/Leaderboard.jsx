@@ -3,7 +3,7 @@ import { Trophy } from 'lucide-react'
 import TopBar from '../components/TopBar.jsx'
 import PageHeader from '../components/PageHeader.jsx'
 import Segmented from '../components/Segmented.jsx'
-import { CATEGORIES, DIFFICULTIES, getCategory, getDifficulty } from '../data/science.js'
+import { CATEGORIES, DIFFICULTIES, getCategory, getDifficulty, themeStyle } from '../data/science.js'
 import { getScores, clearScores } from '../utils/storage.js'
 import { formatDate, formatNumber, formatTime } from '../utils/game.js'
 
@@ -87,10 +87,10 @@ export default function Leaderboard({ onBack }) {
             <tbody>
               {visible.map((s, i) => {
                 const cat = getCategory(s.category)
-                const level = getDifficulty(s.difficulty).name
+                const level = getDifficulty(s.difficulty)
                 const Icon = cat.icon
                 return (
-                  <tr key={s.id} style={{ '--accent': cat.color, '--accent-soft': cat.colorSoft }}>
+                  <tr key={s.id} style={themeStyle(cat)}>
                     <td className="col-rank">
                       <span className={`rank rank-${i + 1}`}>{i + 1}</span>
                     </td>
@@ -102,13 +102,17 @@ export default function Leaderboard({ onBack }) {
                         <div className="player-text">
                           <div className="player-name">{s.name}</div>
                           <div className="player-meta">
-                            {cat.name} · {level} · {s.accuracy}% · {formatTime(s.seconds)}
+                            {cat.name} · {level.name} · {s.accuracy}% · {formatTime(s.seconds)}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="col-wide">{cat.name}</td>
-                    <td className="col-wide">{level}</td>
+                    <td className="col-wide">
+                      <span className="field-tag"><i />{cat.name}</span>
+                    </td>
+                    <td className="col-wide">
+                      <span className={`pill tone-${level.tone}`}>{level.name}</span>
+                    </td>
                     <td className="col-wide num">{s.accuracy}%</td>
                     <td className="col-wide num">{formatTime(s.seconds)}</td>
                     <td className="col-wide num">{formatDate(s.date)}</td>
